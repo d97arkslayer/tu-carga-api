@@ -7,11 +7,15 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx'], // Procesar archivos TypeScript
     languageOptions: {
-      parser: tsParser, // Usa el parser directamente
+      parser: tsParser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './tsconfig.json', // Usar el archivo tsconfig.json
+        project: './tsconfig.json',
+      },
+      globals: {
+        process: 'readonly', // Marca `process` como global de solo lectura
+        console: 'readonly', // Marca `console` como global de solo lectura
       },
     },
     plugins: {
@@ -23,12 +27,13 @@ export default [
       ...typescriptPlugin.configs.recommended.rules,
       'prettier/prettier': 'error', // Integra Prettier con ESLint
       'no-console': 'off', // Permitir console.log
-      'semi': ['error', 'always'], // Punto y coma obligatorio
-      'quotes': ['error', 'single'], // Comillas simples obligatorias
+      'semi': ['error', 'always'],
+      'quotes': ['error', 'single'],
+      '@typescript-eslint/no-explicit-any': 'off'
     },
   },
   {
-    files: ['**/*.js'], // Configuración para archivos JavaScript
+    files: ['**/*.js'],
     rules: {
       'no-unused-vars': 'warn',
     },
