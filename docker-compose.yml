@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:14 # Imagen oficial de PostgreSQL versión 14
+    container_name: tucarga-postgres # Nombre del contenedor
+    ports:
+      - '5432:5432' # Mapea el puerto del contenedor al host
+    environment:
+      POSTGRES_USER: admin # Usuario de PostgreSQL
+      POSTGRES_PASSWORD: admin123 # Contraseña del usuario
+      POSTGRES_DB: tucarga # Base de datos inicial
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Volumen persistente para los datos
+
+volumes:
+  postgres_data: # Define un volumen persistente
