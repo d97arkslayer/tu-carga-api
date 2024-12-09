@@ -1,5 +1,5 @@
-require('ts-node/register'); // Soporte para TypeScript
-require('dotenv').config(); // Soporte para variables de entorno
+require('ts-node/register');
+require('dotenv').config();
 
 module.exports = {
   development: {
@@ -9,6 +9,11 @@ module.exports = {
     host: process.env.DB_HOST || '127.0.0.1',
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
+    migrationStorage: 'sequelize', // Almacenar metadatos de migraciones
+    migrationStorageTableName: 'migrations_meta', // Nombre de la tabla de metadatos
+    seederStorage: 'sequelize', // Almacenar metadatos de seeders
+    seederStorageTableName: 'seeders_meta', // Nombre de la tabla de metadatos
+    models: [path.resolve(__dirname, '../models/*.ts')],
   },
   test: {
     username: process.env.DB_USER || 'admin',
@@ -17,6 +22,8 @@ module.exports = {
     host: process.env.DB_HOST || '127.0.0.1',
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
+    models: [path.resolve(__dirname, '../models/*.ts')],
+
   },
   production: {
     username: process.env.DB_USER,
@@ -25,5 +32,7 @@ module.exports = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
+    models: [path.resolve(__dirname, '../models/*.ts')],
+
   },
 };

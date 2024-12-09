@@ -6,11 +6,13 @@ import {
   updateVehicleHandler,
   deleteVehicleHandler,
 } from '@controllers/vehicle.controller';
+import { validate } from '@schemas/validation.middleware';
+import { vehicleSchema } from '../schemas/vehicle.schema';
 
 const router = Router();
 
 router.get('/', getVehicles);
-router.post('/', createVehicleHandler);
+router.post('/', validate(vehicleSchema), createVehicleHandler);
 router.get('/:id', getVehicleHandler);
 router.put('/:id', updateVehicleHandler);
 router.delete('/:id', deleteVehicleHandler);
