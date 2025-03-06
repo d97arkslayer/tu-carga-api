@@ -1,5 +1,7 @@
+const path = require('path');
 require('ts-node/register');
 require('dotenv').config();
+
 
 module.exports = {
   development: {

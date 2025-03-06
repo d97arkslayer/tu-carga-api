@@ -22,7 +22,9 @@ const modelFiles = fs
   .readdirSync(modelsPath)
   .filter((file) => file.endsWith('.ts') && file !== 'index.ts');
 
-const models = modelFiles.map((file) => require(path.join(modelsPath, file)).default);
+const models = modelFiles.map(
+  (file) => require(path.join(modelsPath, file)).default,
+);
 
 sequelize.addModels(models);
 
