@@ -4,6 +4,7 @@ import User from '@models/User';
 import crypto from 'crypto';
 import { sendPasswordRecoveryEmail } from '@utils/email.utils';
 import { generateToken } from '@utils/jwt.utils';
+import { Op } from 'sequelize';
 
 // Request password reset
 export const requestPasswordReset = async (
@@ -66,11 +67,12 @@ export const resetPassword = async (
     // Verify token is valid
     const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
 
-    // Find user with valid token
     const user = await User.findOne({
       where: {
         resetPasswordToken: tokenHash,
-        resetPasswordExpires: { $gt: Date.now() },
+        resetPasswordExpires: {
+          [Op.gt]: new Date(), // Use Sequelize operator and proper Date object
+        },
       },
     });
 
