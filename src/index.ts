@@ -1,21 +1,20 @@
 import 'reflect-metadata';
 import app from './app';
 import sequelize from './config/database';
-
-const PORT = process.env.PORT || 4000;
+import { config } from '@config/index';
 
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Conexión a la base de datos establecida');
-    return sequelize.sync({ force: false }); // Cambiar a true para reiniciar las tablas
+    console.log('Database connection established');
+    return sequelize.sync({ force: false }); // Change to true to reset tables
   })
   .then(() => {
-    console.log('Modelos sincronizados con la base de datos');
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log('Models synchronized with database');
+    app.listen(config.port, () => {
+      console.log(`Server running at http://localhost:${config.port}`);
     });
   })
   .catch((err) => {
-    console.error('Error conectando a la base de datos:', err);
+    console.error('Error connecting to database:', err);
   });
