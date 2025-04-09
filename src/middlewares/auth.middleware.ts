@@ -2,6 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, TokenPayload } from '@utils/jwt.utils';
 import { CustomError } from '@utils/CustomError';
+import User from '@models/User';
 
 // Extend Express Request type to include user information
 declare global {
@@ -12,11 +13,11 @@ declare global {
   }
 }
 
-export const authenticate = (
+export const authenticate = async (
   req: Request,
   res: Response,
   next: NextFunction,
-): void => {
+): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
 
@@ -27,8 +28,15 @@ export const authenticate = (
     const token = authHeader.split(' ')[1];
     const decoded = verifyToken(token);
 
-    // Add user info to request
-    req.user = decoded;
+    const user = await User.findByPk(decoded?.userId);
+
+    if (!user) {
+      // @ts-ignore
+      return res.status(401).json({ success: false, error: 'User not found' });
+    }
+
+    // @ts-ignore
+    req.user = user;
     next();
   } catch (error) {
     console.log(error);

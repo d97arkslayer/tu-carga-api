@@ -1,6 +1,8 @@
 // src/controllers/user.controller.ts
 import { Request, Response } from 'express';
 import User from '../models/User';
+import Vehicle from '@models/Vehicle';
+import { VehicleService } from '@services/vehicle.service';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -128,4 +130,27 @@ export const deleteUser = async (req: Request, res: Response) => {
     console.log(error);
     res.status(400).json({ success: false, error: error.message });
   }
+};
+
+export const getCurrentUser = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  // @ts-ignore
+  const user: User = req.user;
+  const vehiclesService = new VehicleService();
+  const vehicles = await vehiclesService.getVehiclesByUser(user?.id);
+
+  // @ts-ignore
+  res.status(200).json({
+    success: true,
+    data: {
+      id: user?.id,
+      name: user?.name,
+      email: user?.email,
+      lastName: user?.lastName,
+      phone: user?.phone,
+      vehicles,
+    },
+  });
 };

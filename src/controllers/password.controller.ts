@@ -1,4 +1,13 @@
-// src/controllers/password.controller.ts
+/**
+ * Password Controller
+ *
+ * This controller handles password reset functionality including:
+ * - Requesting a password reset (generates token and sends email)
+ * - Resetting a password with a valid token
+ *
+ * @module controllers/password
+ */
+
 import { Request, Response } from 'express';
 import User from '@models/User';
 import crypto from 'crypto';
@@ -6,7 +15,15 @@ import { sendPasswordRecoveryEmail } from '@utils/email.utils';
 import { generateToken } from '@utils/jwt.utils';
 import { Op } from 'sequelize';
 
-// Request password reset
+/**
+ * Handles password reset requests by generating a secure token and sending
+ * a recovery email to the user's registered email address.
+ *
+ * @param {Request} req - Express request object containing email in body
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} - Returns void with appropriate HTTP response
+ * @throws {Error} - If there's a server error during processing
+ */
 export const requestPasswordReset = async (
   req: Request,
   res: Response,
@@ -56,7 +73,15 @@ export const requestPasswordReset = async (
   }
 };
 
-// Reset password with token
+/**
+ * Resets a user's password using a valid reset token.
+ * Verifies the token is valid and not expired before updating the password.
+ *
+ * @param {Request} req - Express request containing token and newPassword in body
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} - Returns void with appropriate HTTP response
+ * @throws {Error} - If there's a server error during processing
+ */
 export const resetPassword = async (
   req: Request,
   res: Response,

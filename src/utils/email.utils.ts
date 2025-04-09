@@ -4,7 +4,6 @@ import { config } from '@config/index';
 
 // Initialize SendGrid with API key
 sgMail.setApiKey(config.sendgrid.apiKey);
-console.log('SENDGRID_API_KEY:', config.sendgrid.apiKey);
 
 interface EmailData {
   to: string;

@@ -1,20 +1,30 @@
+// src/routes/vehicle.routes.ts
 import { Router } from 'express';
+import vehicleController from '@controllers/vehicle.controller';
+import { validate } from '@middlewares/validation.middleware';
 import {
-  getVehicles,
-  createVehicleHandler,
-  getVehicleHandler,
-  updateVehicleHandler,
-  deleteVehicleHandler,
-} from '@controllers/vehicle.controller';
-import { validate } from '@schemas/validation.middleware';
-import { vehicleSchema } from '../schemas/vehicle.schema';
+  createVehicleSchema,
+  updateVehicleSchema,
+} from '@schemas/vehicle.schema';
 
 const router = Router();
 
-router.get('/', getVehicles);
-router.post('/', validate(vehicleSchema), createVehicleHandler);
-router.get('/:id', getVehicleHandler);
-router.put('/:id', updateVehicleHandler);
-router.delete('/:id', deleteVehicleHandler);
+router.get('/', vehicleController.getAllVehicles);
+
+router.get('/:id', vehicleController.getVehicleById);
+
+router.post(
+  '/',
+  validate(createVehicleSchema),
+  vehicleController.createVehicle,
+);
+
+router.put(
+  '/:id',
+  validate(updateVehicleSchema),
+  vehicleController.updateVehicle,
+);
+
+router.delete('/:id', vehicleController.deleteVehicle);
 
 export default router;

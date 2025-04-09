@@ -19,7 +19,7 @@
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
       "@middlewares/*": ["src/middlewares/*"],
-      "@schemas/*": ["src/middlewares/*"]
+      "@schemas/*": ["src/schemas/*"]
     }
   },
   "include": ["src/**/*"],

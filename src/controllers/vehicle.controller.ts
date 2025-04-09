@@ -1,57 +1,177 @@
+// src/controllers/vehicle.controller.ts
 import { Request, Response } from 'express';
-import {
-  getAllVehicles,
-  createVehicle,
-  getVehicleById,
-  updateVehicle,
-  deleteVehicle,
-} from '@services/vehicle.service';
+import vehicleService from '@services/vehicle.service';
 
-export const getVehicles = async (req: Request, res: Response) => {
-  try {
-    const vehicles = await getAllVehicles();
-    res.status(200).json(vehicles);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+/**
+ * Controller for vehicle-related endpoints
+ */
+export class VehicleController {
+  /**
+   * Create a new vehicle
+   *
+   * @param req - Express request object
+   * @param res - Express response object
+   */
+  async createVehicle(req: Request, res: Response): Promise<void> {
+    try {
+      const vehicle = await vehicleService.createVehicle(req.body);
+      res.status(201).json({
+        success: true,
+        data: vehicle,
+      });
+    } catch (error) {
+      console.error('Error creating vehicle:', error);
 
-export const createVehicleHandler = async (req: Request, res: Response) => {
-  try {
-    const { make, model, year } = req.body;
-    const vehicle = await createVehicle({ make, model, year });
-    res.status(201).json(vehicle);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+      if (
+        error instanceof Error &&
+        error.message === 'Vehicle with this identifier already exists'
+      ) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+        return;
+      }
 
-export const getVehicleHandler = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const vehicle = await getVehicleById(Number(id));
-    res.status(200).json(vehicle);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
+      res.status(500).json({
+        success: false,
+        message: 'Failed to create vehicle',
+      });
+    }
   }
-};
 
-export const updateVehicleHandler = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const vehicle = await updateVehicle(Number(id), req.body);
-    res.status(200).json(vehicle);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-};
+  /**
+   * Get a vehicle by ID
+   *
+   * @param req - Express request object
+   * @param res - Express response object
+   */
+  async getVehicleById(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const vehicle = await vehicleService.findVehicleById(parseInt(id));
 
-export const deleteVehicleHandler = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const message = await deleteVehicle(Number(id));
-    res.status(200).json(message);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
+      if (!vehicle) {
+        res.status(404).json({
+          success: false,
+          message: 'Vehicle not found',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: vehicle,
+      });
+    } catch (error) {
+      console.error('Error fetching vehicle by id:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch vehicle',
+      });
+    }
   }
-};
+
+  /**
+   * Get all vehicles with optional filtering
+   *
+   * @param req - Express request object
+   * @param res - Express response object
+   */
+  async getAllVehicles(req: Request, res: Response): Promise<void> {
+    try {
+      const vehicles = await vehicleService.getAllVehicles(req.query);
+      res.status(200).json({
+        success: true,
+        data: vehicles,
+      });
+    } catch (error) {
+      console.error('Error fetching vehicles:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch vehicles',
+      });
+    }
+  }
+
+  /**
+   * Update a vehicle by ID
+   *
+   * @param req - Express request object
+   * @param res - Express response object
+   */
+  async updateVehicle(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const vehicle = await vehicleService.updateVehicle(
+        parseInt(id),
+        req.body,
+      );
+
+      if (!vehicle) {
+        res.status(404).json({
+          success: false,
+          message: 'Vehicle not found',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: vehicle,
+      });
+    } catch (error) {
+      console.error('Error updating vehicle:', error);
+
+      if (
+        error instanceof Error &&
+        error.message === 'Vehicle with this identifier already exists'
+      ) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+        return;
+      }
+
+      res.status(500).json({
+        success: false,
+        message: 'Failed to update vehicle',
+      });
+    }
+  }
+
+  /**
+   * Delete a vehicle by ID
+   *
+   * @param req - Express request object
+   * @param res - Express response object
+   */
+  async deleteVehicle(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const success = await vehicleService.deleteVehicle(parseInt(id));
+
+      if (!success) {
+        res.status(404).json({
+          success: false,
+          message: 'Vehicle not found',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Vehicle deleted successfully',
+      });
+    } catch (error) {
+      console.error('Error deleting vehicle:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to delete vehicle',
+      });
+    }
+  }
+}
+
+export default new VehicleController();
