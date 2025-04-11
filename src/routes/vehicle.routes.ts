@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import vehicleController from '@controllers/vehicle.controller';
 import { validate } from '@middlewares/validation.middleware';
+import { authenticate } from '@middlewares/auth.middleware';
 import {
   createVehicleSchema,
   updateVehicleSchema,
@@ -10,6 +11,8 @@ import {
 const router = Router();
 
 router.get('/', vehicleController.getAllVehicles);
+
+router.get('/user', authenticate, vehicleController.getVehiclesByUser);
 
 router.get('/:id', vehicleController.getVehicleById);
 

@@ -2,6 +2,8 @@
 import Vehicle from '@models/Vehicle';
 import { Op } from 'sequelize';
 import User from '@models/User';
+// New import for VehicleItem
+import VehicleItem from '@models/VehicleItem';
 
 interface VehicleCreateParams {
   plate: string;
@@ -198,6 +200,16 @@ export class VehicleService {
       order: [['createdAt', 'DESC']],
     });
   }
+
+  // Add method to get vehicles by user with items
+  async getVehiclesByUserWithItems(userId: number): Promise<Vehicle[]> {
+    return Vehicle.findAll({
+      where: { userId },
+      include: [{ model: VehicleItem }],
+      order: [['createdAt', 'DESC']],
+    });
+  }
 }
 
 export default new VehicleService();
+

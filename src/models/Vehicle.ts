@@ -6,8 +6,10 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import User from './User';
+import VehicleItem from './VehicleItem';
 
 @Table({
   tableName: 'Vehicles',
@@ -30,6 +32,9 @@ export default class Vehicle extends Model {
 
   @BelongsTo(() => User)
   user!: User;
+
+  @HasMany(() => VehicleItem)
+  vehicleItems!: VehicleItem[];
 
   @Column({
     type: DataType.STRING,
