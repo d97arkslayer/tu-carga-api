@@ -53,4 +53,16 @@ export default class UserItem extends Model {
     allowNull: true,
   })
   itemIdentifier!: string | null;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  vehicleType!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  licenseCategory!: string;
 }

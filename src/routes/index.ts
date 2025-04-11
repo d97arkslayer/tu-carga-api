@@ -5,6 +5,7 @@ import passwordRoutes from './password.routes';
 import verificationRoutes from './verification.routes';
 import vehicleRoutes from './vehicle.routes';
 import vehicleItemsRoutes from './vehicleItem.routes';
+import userItemRoutes from './userItem.routes';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/password', passwordRoutes);
 router.use('/verification', verificationRoutes);
 router.use('/vehicles', vehicleRoutes);
 router.use('/vehicle-items', vehicleItemsRoutes);
+router.use('/user-items', userItemRoutes);
 
 export default router;
