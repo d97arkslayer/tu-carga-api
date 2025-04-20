@@ -10,6 +10,7 @@ import {
 } from 'sequelize-typescript';
 import User from './User';
 import VehicleItem from './VehicleItem';
+import Maintenance from './Maintenance'; // added import
 
 @Table({
   tableName: 'Vehicles',
@@ -35,6 +36,9 @@ export default class Vehicle extends Model {
 
   @HasMany(() => VehicleItem)
   vehicleItems!: VehicleItem[];
+
+  @HasMany(() => Maintenance) // added relation: Vehicle has many Maintenances
+  maintenances!: Maintenance[];
 
   @Column({
     type: DataType.STRING,
@@ -131,3 +135,4 @@ export default class Vehicle extends Model {
   })
   from!: string;
 }
+

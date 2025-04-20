@@ -4,6 +4,10 @@ import { Op } from 'sequelize';
 import User from '@models/User';
 // New import for VehicleItem
 import VehicleItem from '@models/VehicleItem';
+import Maintenance from '@models/Maintenance';
+import OilChange from '@models/OilChange';
+import TireChange from '@models/TireChange';
+import MaintenanceItem from '@models/MaintenanceItem';
 
 interface VehicleCreateParams {
   plate: string;
@@ -205,11 +209,20 @@ export class VehicleService {
   async getVehiclesByUserWithItems(userId: number): Promise<Vehicle[]> {
     return Vehicle.findAll({
       where: { userId },
-      include: [{ model: VehicleItem }],
+      include: [
+        { model: VehicleItem },
+        {
+          model: Maintenance,
+          include: [
+            { model: OilChange },
+            { model: TireChange },
+            { model: MaintenanceItem },
+          ],
+        },
+      ],
       order: [['createdAt', 'DESC']],
     });
   }
 }
 
 export default new VehicleService();
-

@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('UserItems', [
       {
-        userId: 3,
+        userId: 1,
         category: 'license',
         issueDate: new Date('2024-02-01'),
         expiryDate: new Date('2029-02-01'),

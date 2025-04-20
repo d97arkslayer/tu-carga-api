@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         plate: 'XYZ789',
-        userId: 2,
+        userId: 1,
         year: 2018,
         make: 'Ford',
         dniOwner: '0987654321',
@@ -47,6 +47,50 @@ module.exports = {
         from: 'Medellín',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        plate: 'DEF456',
+        userId: 1,
+        year: 2021,
+        make: 'Honda',
+        dniOwner: '4567891230',
+        dniOwnerType: 'CC',
+        vehicleType: 'car',
+        line: 'Honda Civic',
+        engineDisplacement: 2000,
+        serviceType: 'private',
+        engineId: 'ENG456789',
+        VIN: '3HGCM567X3H123456',
+        chassisId: 'CHS456789',
+        color: 'blue',
+        passengerCapacity: 5,
+        fuelType: 'gasolina',
+        registrationDate: new Date('2021-05-10'),
+        from: 'Cali',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        plate: 'GHI012',
+        userId: 1,
+        year: 2019,
+        make: 'Chevrolet',
+        dniOwner: '3216549870',
+        dniOwnerType: 'NIT',
+        vehicleType: 'truck',
+        line: 'Chevrolet Silverado',
+        engineDisplacement: 6000,
+        serviceType: 'public',
+        engineId: 'ENG321654',
+        VIN: '4GAKRAED8K1234567',
+        chassisId: 'CHS321654',
+        color: 'black',
+        passengerCapacity: 2,
+        fuelType: 'diesel',
+        registrationDate: new Date('2019-09-15'),
+        from: 'Barranquilla',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },
@@ -55,3 +99,4 @@ module.exports = {
     await queryInterface.bulkDelete('Vehicles', null, {});
   }
 };
+

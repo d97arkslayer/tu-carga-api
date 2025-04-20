@@ -3,7 +3,7 @@
 
 API developed with Node.js, TypeScript, Sequelize, and ESLint to manage insurance logs, maintenance, and part changes for vehicles.
 
----
+*--
 
 ## **Prerequisites**
 
@@ -11,7 +11,7 @@ API developed with Node.js, TypeScript, Sequelize, and ESLint to manage insuranc
 2. **Docker**: For the PostgreSQL database.
 3. **Project Dependencies**: Installed using `npm install`.
 
----
+*--
 
 ## **Installation and Setup**
 
@@ -40,7 +40,7 @@ API developed with Node.js, TypeScript, Sequelize, and ESLint to manage insuranc
    docker-compose up -d
    ```
 
----
+*--
 
 ## **Running the Project**
 
@@ -61,7 +61,7 @@ npm run dev
    npm start
    ```
 
----
+*--
 
 ## **Migrations and Seeders**
 
@@ -109,7 +109,7 @@ Insert initial data into the database:
 npm run db:seed
 ```
 
----
+*--
 
 ## **Adding a New Model and Endpoint**
 
@@ -246,7 +246,7 @@ router.use('/drivers', driverRoutes);
 export default router;
 ```
 
----
+*--
 
 ## **Test the Endpoint**
 
@@ -259,7 +259,7 @@ export default router;
    - **GET /drivers**: Retrieve the list of drivers.
    - **POST /drivers**: Create a new driver.
 
----
+*--
 
 ## **Useful Commands**
 
@@ -271,6 +271,6 @@ export default router;
 | `npm run lint`          | Run ESLint to check the code.                     |
 | `npm run lint:fix`      | Automatically fix linting errors.                 |
 
----
+*--
 
 Feel free to reach out if you encounter any issues or need further assistance!
